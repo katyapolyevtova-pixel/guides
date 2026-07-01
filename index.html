@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Регистрация в «Рабочие руки»</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #991b1b;
+      --red-dark: #7f1d1d;
+      --red-deeper: #450a0a;
+      --red-mid: #b91c1c;
+      --red-light: #fff5f5;
+      --red-border: #fecaca;
+      --text: #1c1917;
+      --text-muted: #6b7280;
+      --bg: #f9f9f9;
+      --card: #ffffff;
+      --radius: 16px;
+      --shadow: 0 2px 10px rgba(153,27,27,0.10);
+      --shadow-md: 0 4px 20px rgba(153,27,27,0.16);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(145deg, #450a0a 0%, #7f1d1d 45%, #991b1b 100%);
+      color: white;
+      padding: 44px 20px 54px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -70px; left: -30px;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .hero-icon { font-size: 54px; display: block; margin-bottom: 14px; position: relative; z-index: 1; }
+    .hero h1 {
+      font-size: 22px; font-weight: 700; line-height: 1.3;
+      max-width: 310px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-block; margin-top: 12px;
+      background: rgba(255,255,255,0.15); border-radius: 20px;
+      padding: 4px 16px; font-size: 13px; font-weight: 500;
+      position: relative; z-index: 1;
+    }
+
+    /* ── WAVE ── */
+    .wave { display: block; width: 100%; height: 36px; margin-top: -1px; }
+
+    /* ── SECTION ── */
+    .section { padding: 24px 16px 28px; }
+
+    /* ── DOWNLOAD ── */
+    .download-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+      border: 1.5px solid var(--red-border);
+    }
+    .download-label {
+      font-size: 13px; font-weight: 700;
+      color: var(--red); text-transform: uppercase;
+      letter-spacing: 0.6px; margin-bottom: 14px;
+    }
+    .download-buttons { display: flex; flex-direction: column; gap: 10px; }
+    .btn-dl {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 16px; border-radius: 12px;
+      text-decoration: none; font-size: 15px;
+      font-weight: 600; color: white;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+    .btn-dl:active { transform: scale(0.97); opacity: 0.9; }
+    .btn-gplay    { background: linear-gradient(135deg, #991b1b, #7f1d1d); }
+    .btn-rustore  { background: linear-gradient(135deg, #b91c1c, #991b1b); }
+    .btn-appstore { background: linear-gradient(135deg, #1c1917, #44403c); }
+    .btn-dl .si { font-size: 22px; flex-shrink: 0; }
+    .btn-dl .st small { display: block; font-size: 11px; font-weight: 400; opacity: 0.75; }
+
+    /* ── BLOCK HEADER ── */
+    .block-head {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 18px;
+    }
+    .block-icon {
+      width: 46px; height: 46px; border-radius: 13px;
+      background: var(--red-light); border: 1.5px solid var(--red-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+    }
+    .block-title { font-size: 20px; font-weight: 700; }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 3px; }
+
+    .step-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px 16px 16px 14px;
+      box-shadow: var(--shadow);
+      display: flex; gap: 14px; align-items: flex-start;
+      border-left: 4px solid var(--red);
+      margin-bottom: 10px;
+    }
+
+    .step-num {
+      font-size: 32px; font-weight: 900;
+      color: var(--red-border);
+      line-height: 1; flex-shrink: 0;
+      width: 42px; text-align: center;
+      margin-top: -2px;
+    }
+
+    .step-body { flex: 1; }
+
+    .step-text { font-size: 15px; color: var(--text); line-height: 1.6; }
+    .step-text strong { color: var(--red-dark); }
+
+    .step-ps {
+      margin-top: 9px;
+      background: var(--red-light);
+      border-left: 3px solid var(--red);
+      border-radius: 0 8px 8px 0;
+      padding: 8px 10px;
+      font-size: 13px; color: var(--red-dark); line-height: 1.5;
+    }
+
+    /* ── FINAL STEP ── */
+    .step-final {
+      background: linear-gradient(135deg, #fff5f5, #fee2e2);
+      border: 2px solid var(--red);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 10px;
+    }
+    .step-final-head {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .step-final-num {
+      font-size: 36px; font-weight: 900; color: var(--red); line-height: 1;
+    }
+    .step-final-label { font-size: 16px; font-weight: 700; color: var(--red-dark); }
+    .step-final-sub { font-size: 13px; color: var(--red); font-weight: 500; }
+
+    .final-rows { display: flex; flex-direction: column; gap: 9px; }
+    .final-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: #450a0a; line-height: 1.55;
+    }
+    .final-row .rn {
+      font-weight: 700; color: var(--red); flex-shrink: 0; font-size: 15px;
+    }
+    .final-row strong { color: var(--red-dark); }
+
+    .path-chain {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 4px; margin-top: 6px;
+    }
+    .path-item {
+      background: var(--red); color: white;
+      border-radius: 6px; padding: 3px 9px;
+      font-size: 13px; font-weight: 600;
+    }
+    .path-arrow { color: var(--red); font-size: 14px; font-weight: 700; }
+
+    /* ── IMPORTANT NOTE ── */
+    .note-card {
+      background: #fff8f0;
+      border: 1.5px solid #fcd34d;
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .note-card .ni { font-size: 20px; flex-shrink: 0; }
+    .note-card .nt { font-size: 14px; color: #78350f; font-weight: 500; line-height: 1.5; }
+
+    /* ── SEPARATOR ── */
+    .sep {
+      height: 10px;
+      background: linear-gradient(to right, #fee2e2, #fef2f2, transparent);
+      border-radius: 5px;
+      margin: 4px 0 28px;
+    }
+
+    /* ── CONGRATS ── */
+    .congrats-box {
+      background: linear-gradient(135deg, #991b1b, #b91c1c);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      text-align: center;
+      color: white;
+      box-shadow: var(--shadow-md);
+      margin-top: 4px;
+    }
+    .congrats-box .ci { font-size: 40px; margin-bottom: 10px; }
+    .congrats-box .ct { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .congrats-box .cs { font-size: 14px; opacity: 0.9; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center; padding: 20px 20px 44px;
+      font-size: 13px; color: var(--text-muted);
+    }
+    .footer .fi { font-size: 28px; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-icon">🤝</span>
+  <h1>Регистрация в приложении «Рабочие руки»</h1>
+  <span class="hero-badge">Пошаговая инструкция для новых исполнителей</span>
+</div>
+<svg class="wave" viewBox="0 0 375 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,36 L0,14 Q80,0 150,16 T310,8 T375,18 L375,36 Z" fill="#f9f9f9"/>
+</svg>
+
+<div class="section">
+
+  <!-- СКАЧАТЬ -->
+  <div class="download-card">
+    <div class="download-label">📲 Скачать приложение</div>
+    <div class="download-buttons">
+      <a href="https://play.google.com/store/apps/details?id=pro.handswork.rabruki" class="btn-dl btn-gplay" target="_blank" rel="noopener">
+        <span class="si">▶</span>
+        <span class="st"><small>Доступно в</small>Google Play</span>
+      </a>
+      <a href="https://www.rustore.ru/catalog/app/pro.handswork.rabruki" class="btn-dl btn-rustore" target="_blank" rel="noopener">
+        <span class="si">🏪</span>
+        <span class="st"><small>Доступно в</small>RuStore</span>
+      </a>
+      <a href="https://apps.apple.com/ru/app/id1312639906" class="btn-dl btn-appstore" target="_blank" rel="noopener">
+        <span class="si">🍎</span>
+        <span class="st"><small>Доступно в</small>App Store</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── БЛОК 1: РЕГИСТРАЦИЯ ── -->
+  <div class="block-head">
+    <div class="block-icon">📋</div>
+    <div class="block-title">Регистрация</div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-text">После открытия приложения нажимаем <strong>«Далее»</strong></div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-text">Сверху экрана нажимаем <strong>«Авторизоваться»</strong></div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-text">Вводим свой <strong>номер телефона</strong>. Нажимаем <strong>«Отправить код»</strong>. Придёт смс-код — вводим его и попадаем на главную страницу.</div>
+        <div class="step-ps">💬 Иногда требуется ввести ФИО, дату рождения, пол, город.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-text">Вверху страницы нажимаем на своё <strong>ФИО</strong> — переходим в <strong>Личный кабинет</strong>.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-text">Вводим <strong>номер банковской карты</strong> для получения вознаграждений. Нажимаем <strong>«Изменить карту»</strong>, вводим номер и нажимаем <strong>«Подтвердить»</strong>.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-text">Нажимаем на своё <strong>ФИО</strong> — появляются два пункта, которые необходимо заполнить.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <div class="step-text">Кликаем на <strong>ФИО</strong>, заполняем данные, нажимаем <strong>«Сохранить изменения»</strong>.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <div class="step-text">Нажимаем <strong>«Документы»</strong>, вводим паспортные данные, загружаем фото паспорта из галереи, нажимаем <strong>«Отправить на верификацию»</strong>.</div>
+        <div class="step-ps">📸 Советуем фото паспорта делать заранее. Как только данные проверятся — сможете брать смены.</div>
+      </div>
+    </div>
+
+    <!-- ШАГ 9 — ФИНАЛЬНЫЙ -->
+    <div class="step-final">
+      <div class="step-final-head">
+        <div class="step-final-num">9</div>
+        <div>
+          <div class="step-final-label">Заключительный шаг</div>
+          <div class="step-final-sub">Подключение к «Мой налог»</div>
+        </div>
+      </div>
+      <div class="final-rows">
+        <div class="final-row">
+          <span class="rn">1.</span>
+          <span>В <strong>Личном кабинете</strong> находим раздел <strong>«Как подключиться к платформе»</strong> и кликаем на него.</span>
+        </div>
+        <div class="final-row">
+          <span class="rn">2.</span>
+          <span>В чате с роботом нажимаем <strong>«Да»</strong> — робот проверит данные и отправит запрос в приложение <strong>«Мой налог»</strong>.</span>
+        </div>
+        <div class="final-row">
+          <span class="rn">3.</span>
+          <span>Открываем приложение <strong>«Мой налог»</strong> и переходим по пути:</span>
+        </div>
+        <div class="path-chain">
+          <span class="path-item">Прочее</span>
+          <span class="path-arrow">→</span>
+          <span class="path-item">Партнёры</span>
+          <span class="path-arrow">→</span>
+          <span class="path-item">Рабочие руки</span>
+          <span class="path-arrow">→</span>
+          <span class="path-item">Разрешить</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="congrats-box">
+      <div class="ci">🎉</div>
+      <div class="ct">Регистрация завершена!</div>
+      <div class="cs">Теперь вы можете брать заказы и получать вознаграждения!</div>
+    </div>
+
+  </div>
+
+  <!-- ── БЛОК 2: КАК ВЗЯТЬ СМЕНУ ── -->
+  <div class="sep" style="margin-top: 32px;"></div>
+
+  <div class="block-head">
+    <div class="block-icon">🗓️</div>
+    <div class="block-title">Как взять смену</div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-text">На главной странице нажимаем <strong>«Подработка»</strong></div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-text">Выбираем <strong>дату</strong>, находим смену по <strong>адресу, оплате и режиму работы</strong>.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-text">Кликаем на смену, нажимаем <strong>«Подписать договор и взять смену»</strong>, вводим смс-код.</div>
+        <div class="step-ps">✅ Всё — смена взята! Завтра нужно подтвердить выход.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── БЛОК 3: ПОДТВЕРЖДЕНИЕ ВЫХОДА ── -->
+  <div class="sep"></div>
+
+  <div class="block-head">
+    <div class="block-icon">🔔</div>
+    <div class="block-title">Подтверждение выхода на смену</div>
+  </div>
+
+  <div class="note-card">
+    <span class="ni">⏰</span>
+    <div class="nt"><strong>Важно:</strong> не позже чем за <strong>1 час 30 минут</strong> до начала смены подтвердите своё участие!</div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-text">Нажимаем <strong>«Подработка»</strong> → значок <strong>«Мои смены»</strong> внизу экрана.</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-text">Находим смену с пометкой <strong>«Требуется ваше подтверждение»</strong>, кликаем на неё и нажимаем <strong>«Подтвердить»</strong>.</div>
+        <div class="step-ps" style="background:#f0fdf4; border-color:#22c55e; color:#14532d;">✅ Готово! Вы подтвердили смену!</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="fi">🤝</div>
+  <div>«Рабочие руки» — платформа для подработки</div>
+</div>
+
+</body>
+</html>
